@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Quiz
+{% endblock %}
+
+{% block main %}
+    {% for level in levels %}
+        {{ level }}
+        <form action="{% url 'quiz:quiz' %}" method="post">
+            {% csrf_token %}
+            {% for question in level.question_set.all %}
+                <label for="{{ question }}">{{ question }}</label> <br>
+                {% for answer in question.answer_set.all %}
+                    <input type="radio" name="{{ answer.id }}"  value="{{ answer.id }}">{{ answer }} <br>
+                {% endfor %}
+            {% endfor %}
+            <button type="submit">sub</button>
+        </form>
+    	
+    {% endfor %}
+    <hr>
+    <form action="" method="post">
+        <label for=""></label>
+        <input type="radio">
+
+        <button type="submit">sub</button>
+    </form>
+    
+{% endblock %}

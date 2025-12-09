@@ -1,0 +1,35 @@
+from django.contrib.auth.models import User
+from django.db import models
+
+class Level(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+
+class Question(models.Model):
+    question_text = models.CharField(max_length=200)
+    level = models.ForeignKey(Level, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.question_text
+
+class Answer(models.Model):
+    answer = models.CharField(max_length=200)
+    is_correct = models.BooleanField(default=False)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.answer
+
+class UserResult(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    answer = models.ForeignKey(Answer, on_delete=models.CASCADE)
+    is_correct = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.user.username
+
+
+
