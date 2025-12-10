@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block title %}Вибір тесту | QuizMaster{% endblock %}
+
+{% block main %}
+    <hgroup>
+        <h1>Доступні тести</h1>
+        <p>Обери тему, щоб перевірити свої знання.</p>
+    </hgroup>
+
+    <div class="grid">
+
+        <article>
+            <header>
+                <strong>🎯 Quiz #1</strong>
+                <span style="float: right; color: var(--pico-ins-color);">🔓 Відкрито</span>
+            </header>
+            <h3 style="margin-bottom: 0.5rem;">Основи Python</h3>
+            <ul style="padding-left: 1rem; margin-bottom: 2rem; font-size: 0.9rem;">
+                <li><strong>Предмет:</strong> Програмування</li>
+                <li><strong>Рівень:</strong> Початковий</li>
+                <li><strong>Питань:</strong> 10</li>
+            </ul>
+            <footer>
+                <a href="#" role="button" style="width: 100%;">Почати тест</a>
+            </footer>
+        </article>
+
+        <article>
+            <header>
+                <strong>🎯 Quiz #2</strong>
+                <span style="float: right; color: var(--pico-ins-color);">🔓 Відкрито</span>
+            </header>
+            <h3 style="margin-bottom: 0.5rem;">Django Framework</h3>
+            <ul style="padding-left: 1rem; margin-bottom: 2rem; font-size: 0.9rem;">
+                <li><strong>Предмет:</strong> Web-розробка</li>
+                <li><strong>Рівень:</strong> Середній</li>
+                <li><strong>Питань:</strong> 15</li>
+            </ul>
+            <footer>
+                <a href="#" role="button" class="contrast" style="width: 100%;">Почати тест</a>
+            </footer>
+        </article>
+
+        <article>
+            <header>
+                <strong>🎯 Quiz #3</strong>
+                <span style="float: right; color: var(--pico-del-color);">🔒 Закрито</span>
+            </header>
+            <h3 style="margin-bottom: 0.5rem;">Бази даних SQL</h3>
+            <ul style="padding-left: 1rem; margin-bottom: 2rem; font-size: 0.9rem;">
+                <li><strong>Предмет:</strong> Бази даних</li>
+                <li><strong>Рівень:</strong> Складний</li>
+                <li><strong>Питань:</strong> 20</li>
+            </ul>
+            <footer>
+                <button disabled style="width: 100%;">Недоступно</button>
+            </footer>
+        </article>
+
+    </div>
+{% endblock %}

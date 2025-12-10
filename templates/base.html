@@ -2,21 +2,33 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-<link
-  rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
+    >
     <title>{% block title %}Quiz{% endblock %}</title>
 </head>
 <body>
-    <header>
-        {% if user.is_authenticated  %}
-            <a href="{% url 'users:profile' %}">{{ user.username }}</a>
-        {% else %}
-            <a href="{% url 'users:login' %}">Login</a>
-            <a href="{% url 'users:register' %}">Register</a>
-        {% endif %}
+    <header class="container">
+    <nav>
+        <ul>
+            <li><a href="{% url 'core:index' %}" style="text-decoration: none">Quiz</a></li>
+        </ul>
+        <ul>
+            {% if user.is_authenticated  %}
+                <li><a href="{% url 'users:profile' %}">{{ user.username }}</a></li>
+            {% else %}
+                <li><a href="{% url 'users:login' %}">Увійти</a></li>
+                <li><a href="{% url 'users:register' %}">Реєстрація</a></li>
+            {% endif %}
+        </ul>
+    </nav>
     </header>
-    {% block main %}{% endblock %}
+    <main class="container">
+        {% block main %}{% endblock %}
+    </main>
+    <footer class="container" style="margin-top: 50px; text-align: center; opacity: 0.7;">
+        <small>© 2025</small>
+    </footer>
 </body>
 </html>

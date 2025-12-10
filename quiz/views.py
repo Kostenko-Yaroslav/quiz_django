@@ -21,3 +21,6 @@ def quiz(request):
         return redirect('core:index')
 
     return render(request, 'quiz/quiz.html', {'levels': levels})
+
+def quiz_list(request):
+    return render(request, 'quiz/quiz_list.html', {'levels': Level.objects.all()})

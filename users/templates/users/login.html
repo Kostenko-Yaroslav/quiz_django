@@ -1,13 +1,15 @@
 {% extends 'base.html' %}
 
 {% block title %}
-	Login
+	Вхід
 {% endblock %}
 
 {% block main %}
+    <article style="max-width: 500px; margin: 0 auto;">
     <form action="{% url 'users:login' %}" method="post">
-        {% csrf_token %} <h1>Login</h1>
+        {% csrf_token %} <h1>Вхід</h1>
         {{ form.as_p }}
-        <button type="submit">sub</button>
+        <button type="submit">Увійти</button>
     </form>
+    </article>
 {% endblock %}

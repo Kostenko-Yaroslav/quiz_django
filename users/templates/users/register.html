@@ -1,13 +1,15 @@
 {% extends 'base.html' %}
 
 {% block title %}
-	Register
+	Реєстрація
 {% endblock %}
 
 {% block main %}
+    <article style="max-width: 500px; margin: 0 auto;">
     <form method="post">
-    {% csrf_token %} <h1>Register</h1>
+    {% csrf_token %} <h1>Реєстрація</h1>
     {{ form.as_p }}
-    <button type="submit">sub</button>
+    <button type="submit">Зареєструватися</button>
     </form>
+    </article>
 {% endblock %}

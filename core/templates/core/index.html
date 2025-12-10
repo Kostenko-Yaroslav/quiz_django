@@ -1,17 +1,60 @@
 {% extends 'base.html' %}
 
 {% block title %}
-	index
+    Quiz Core
 {% endblock %}
 
 {% block main %}
-	{% if user.is_authenticated  %}
-        <p>Welcome, {{ user.username }}</p>
-        <form action="{% url 'users:logout' %}" method="post">
-            {% csrf_token %}
-            <button type="submit">Logout</button>
-        </form>
+
+    {% if user.is_authenticated %}
+        <article>
+            <header>
+                <hgroup>
+                    <h2>👋 Привіт, {{ user.username }}!</h2>
+                    <p>Готовий перевірити себе?</p>
+                </hgroup>
+            </header>
+
+            <div class="grid">
+                <div>
+                    <h4>Квіз</h4>
+                    <p>Розпочнемо?</p>
+                    <a href="{% url 'quiz:quiz_list' %}" role="button">Обрати тест</a>
+                </div>
+
+                <div>
+                    <h4>Особистий кабінет</h4>
+                    <p>Тут ти можеш переглянути свої досягнення</p>
+                    <a href="{% url 'users:profile' %}" role="button" class="secondary outline">Профіль</a>
+                </div>
+            </div>
+
+            <footer>
+                <form action="{% url 'users:logout' %}" method="post" style="margin: 0;">
+                    {% csrf_token %}
+                    <button type="submit" class="contrast outline" style="width: auto;">Вийти з акаунту</button>
+                </form>
+            </footer>
+        </article>
+
     {% else %}
-        <p>Register or Login</p>
+        <div class="container" style="text-align: center; margin-top: 5vh;">
+            <hgroup>
+                <h1 style="font-size: 3rem;">Quiz</h1>
+            </hgroup>
+
+            <div class="grid" style="max-width: 600px; margin: 3rem auto;">
+                <article>
+                    <h5>Вже маєте аккаунт?</h5>
+                    <a href="{% url 'users:login' %}" role="button" style="width: 100%;">Увійти</a>
+                </article>
+
+                <article>
+                    <h5>Перший раз?</h5>
+                    <a href="{% url 'users:register' %}" role="button" class="contrast" style="width: 100%;">Реєстрація</a>
+                </article>
+            </div>
+        </div>
     {% endif %}
+
 {% endblock %}

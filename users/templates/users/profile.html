@@ -1,9 +1,102 @@
 {% extends 'base.html' %}
 
-{% block title %}
-	Profile
-{% endblock %}
+{% block title %}Мій профіль | QuizMaster{% endblock %}
 
 {% block main %}
-	profile
+
+    <div class="grid">
+
+        <article>
+            <header style="text-align: center;">
+                <img src="https://ui-avatars.com/api/?name={{ user.username }}&background=0D47A1&color=fff&size=128"
+                     style="border-radius: 50%; margin-bottom: 1rem;" alt="Avatar">
+                <h2>{{ user.username }}</h2>
+            </header>
+
+            <p><strong>Email:</strong> {{ user.email|default:"user@example.com" }}</p>
+            <p><strong>Дата реєстрації:</strong> 12.11.2025</p>
+
+            <footer>
+                <a href="#" role="button" class="secondary outline" style="width: 100%;">Вийти з акаунту</a>
+            </footer>
+        </article>
+
+        <article>
+            <header>
+                <strong>📊 Ваша статистика</strong>
+            </header>
+
+            <div class="grid" style="text-align: center;">
+                <div>
+                    <h3 style="margin-bottom: 0;">1,250</h3>
+                    <small>Всього XP</small>
+                </div>
+                <div>
+                    <h3 style="margin-bottom: 0;">12</h3>
+                    <small>Пройдено тестів</small>
+                </div>
+                <div>
+                    <h3 style="margin-bottom: 0; color: var(--pico-ins-color);">85%</h3>
+                    <small>Точність відповідей</small>
+                </div>
+            </div>
+
+            <hr>
+
+            <label>Рівень 5: <strong>Code Ninja</strong></label>
+            <progress value="75" max="100"></progress>
+            <small>Ще 250 XP до рівня "Middle"</small>
+
+            <div style="margin-top: 2rem;">
+                <h6>🏆 Досягнення</h6>
+                <div class="grid">
+                    <span data-tooltip="Пройшов 5 тестів поспіль">🔥 Стрік</span>
+                    <span data-tooltip="Вивчив основи Django">🕸️ Django Fan</span>
+                    <span data-tooltip="Здав тест на 100%">⚡ Перфекціоніст</span>
+                </div>
+            </div>
+        </article>
+    </div>
+
+    <article>
+        <header>
+            <strong>🕓 Історія активності</strong>
+        </header>
+
+        <table class="striped">
+            <thead>
+                <tr>
+                    <th scope="col">Назва тесту</th>
+                    <th scope="col">Дата</th>
+                    <th scope="col">Результат</th>
+                    <th scope="col">Статус</th>
+                    <th scope="col">Дія</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>🐍 Python Basics: Loops</td>
+                    <td>09.12.2025</td>
+                    <td>10 / 10</td>
+                    <td style="color: var(--pico-ins-color);">Відмінно</td>
+                    <td><a href="#">Переглянути</a></td>
+                </tr>
+                <tr>
+                    <td>🗄️ SQL for Beginners</td>
+                    <td>08.12.2025</td>
+                    <td>7 / 10</td>
+                    <td style="color: #e6a23c;">Добре</td>
+                    <td><a href="#">Переглянути</a></td>
+                </tr>
+                <tr>
+                    <td>🕸️ Django Models Architecture</td>
+                    <td>05.12.2025</td>
+                    <td>3 / 10</td>
+                    <td style="color: var(--pico-del-color);">Провал</td>
+                    <td><a href="#">Перездати</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </article>
+
 {% endblock %}

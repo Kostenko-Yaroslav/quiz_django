@@ -1,30 +1,45 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    Quiz
+    Проходження тесту | QuizMaster
 {% endblock %}
 
 {% block main %}
-    {% for level in levels %}
-        {{ level }}
-        <form action="{% url 'quiz:quiz' %}" method="post">
-            {% csrf_token %}
-            {% for question in level.question_set.all %}
-                <label for="{{ question }}">{{ question }}</label> <br>
-                {% for answer in question.answer_set.all %}
-                    <input type="radio" name="{{ answer.id }}"  value="{{ answer.id }}">{{ answer }} <br>
-                {% endfor %}
-            {% endfor %}
-            <button type="submit">sub</button>
-        </form>
-    	
-    {% endfor %}
-    <hr>
-    <form action="" method="post">
-        <label for=""></label>
-        <input type="radio">
 
-        <button type="submit">sub</button>
-    </form>
-    
-{% endblock %}
+    {% for level in levels %}
+        <article>
+            <header>
+                <div class="grid">
+                    <div>
+                        <h2 style="margin-bottom: 0;">{{ level }}</h2>
+                        <small style="color: var(--pico-muted-color);">Дайте відповідь на всі запитання</small>
+                    </div>
+                </div>
+                <progress value="20" max="100" style="margin-top: 1rem;"></progress>
+            </header>
+
+            <form action="{% url 'quiz:quiz' %}" method="post">
+                {% csrf_token %}
+
+                {% for question in level.question_set.all %}
+                    <fieldset style="margin-bottom: 2rem; padding: 1rem; border: 1px solid var(--pico-muted-border-color); border-radius: var(--pico-border-radius);">
+
+                        <legend><strong>{{ forloop.counter }}. {{ question }}</strong></legend>
+
+                        {% for answer in question.answer_set.all %}
+                            <label>
+                                <input type="radio" name="question_{{ question.id }}" value="{{ answer.id }}">
+                                {{ answer }}
+                            </label>
+                        {% endfor %}
+                    </fieldset>
+                {% empty %}
+                    <p>У цьому тесті поки немає запитань.</p>
+                {% endfor %}
+
+                <button type="submit" class="contrast">Завершити тест та отримати результат</button>
+            </form>
+        </article>
+    {% endfor %}
+
+    {% endblock %}
