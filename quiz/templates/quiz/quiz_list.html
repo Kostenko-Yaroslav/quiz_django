@@ -1,12 +1,34 @@
 {% extends 'base.html' %}
 
-{% block title %}Вибір тесту | QuizMaster{% endblock %}
+{% block title %}Вибір тесту{% endblock %}
 
 {% block main %}
     <hgroup>
         <h1>Доступні тести</h1>
         <p>Обери тему, щоб перевірити свої знання.</p>
     </hgroup>
+<div class="grid">
+    {% for level in levels %}
+
+
+        <article>
+            <header>
+                <strong>🎯 {{level.name}}</strong>
+                <span style="float: right; color: var(--pico-ins-color);">🔓 Відкрито</span>
+            </header>
+            <h3 style="margin-bottom: 0.5rem;">{{ level.theme }}</h3>
+            <ul style="padding-left: 1rem; margin-bottom: 2rem; font-size: 0.9rem;">
+                <li><strong>Предмет:</strong>---------</li>
+                <li><strong>Рівень:</strong> {{ level.complexity }}</li>
+                <li><strong>Питань:</strong> 10</li>
+            </ul>
+            <footer>
+                <a href="{% url 'quiz:quiz_detail' level.id %}" role="button" style="width: 100%;">Почати тест</a>
+            </footer>
+        </article>
+
+    {% endfor %}
+</div>
 
     <div class="grid">
 

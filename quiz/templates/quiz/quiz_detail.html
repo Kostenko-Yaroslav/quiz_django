@@ -6,7 +6,6 @@
 
 {% block main %}
 
-    {% for level in levels_detail %}
         <article>
             <header>
                 <div class="grid">
@@ -18,7 +17,7 @@
                 <progress value="20" max="100" style="margin-top: 1rem;"></progress>
             </header>
 
-            <form action="{% url 'quiz:quiz' %}" method="post">
+            <form action="{% url 'quiz:quiz_submit' level.id %}" method="post">
                 {% csrf_token %}
 
                 {% for question in level.question_set.all %}
@@ -28,7 +27,7 @@
 
                         {% for answer in question.answer_set.all %}
                             <label>
-                                <input type="radio" name="question_{{ question.id }}" value="{{ answer.id }}">
+                                <input type="radio" name="{{ question.id }}" value="{{ answer.id }}">
                                 {{ answer }}
                             </label>
                         {% endfor %}
@@ -40,6 +39,6 @@
                 <button type="submit" class="contrast">Завершити тест та отримати результат</button>
             </form>
         </article>
-    {% endfor %}
+
 
     {% endblock %}

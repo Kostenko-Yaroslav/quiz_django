@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+{% block title %}Результати тесту | QuizMaster{% endblock %}
+
+{% block main %}
+
+<div class="container" style="max-width: 800px;">
+
+    <article style="text-align: center;">
+        <header>
+            <small style="color: var(--pico-muted-color);">Звіт про проходження</small>
+            <h2 style="margin-bottom: 0;">{{ level.name }}</h2>
+        </header>
+
+        <div class="grid">
+            <div>
+                <h1 style="font-size: 4rem; margin-bottom: 0;
+                    {% if percent >= 80 %}color: var(--pico-ins-color);
+                    {% elif percent >= 50 %}color: #e6a23c;
+                    {% else %}color: var(--pico-del-color);{% endif %}">
+                    {{ percent }}%
+                </h1>
+                <p>Загальний результат</p>
+            </div>
+
+            <div style="display: flex; flex-direction: column; justify-content: center;">
+                <p><strong>✅ Правильно:</strong> {{ correct }}</p>
+
+            </div>
+        </div>
+
+        <footer style="margin-top: 2rem;">
+            {% if percent == 100 %}
+                <h3>🏆 Code Ninja!</h3>
+                <p>Ідеальний результат. Ви повністю опанували цю тему.</p>
+            {% elif percent >= 70 %}
+                <h3>😎 Чудова робота</h3>
+                <p>Хороший рівень знань, але є куди рости.</p>
+            {% else %}
+                <h3>📚 Треба повчитися</h3>
+                <p>Рекомендуємо повторити матеріал і спробувати ще раз.</p>
+            {% endif %}
+
+            <div class="grid">
+                <a href="{% url 'quiz:quiz_list' %}" role="button" class="secondary outline">До списку тестів</a>
+            </div>
+        </footer>
+    </article>
+
+    <details open>
+        <summary role="button" class="contrast outline">Показати детальні відповіді</summary>
+
+        <article>
+            <table class="striped">
+                <thead>
+                    <tr>
+                        <th>Питання</th>
+                        <th>Ваша відповідь</th>
+                        <th>Статус</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for res in results %}
+                        <tr>
+                            <td>{{ res.question }}</td>
+
+                            <td>
+                                {{ res.answer }}
+                                {% if not res.answer.is_correct %}
+                                    <br><small style="color: var(--pico-del-color);">(Ви помилилися)</small>
+                                {% endif %}
+                            </td>
+
+                            <td style="text-align: center; font-size: 1.5rem;">
+                                {% if res.answer.is_correct %}
+                                    <span style="color: var(--pico-ins-color);" data-tooltip="Правильно">✅</span>
+                                {% else %}
+                                    <span style="color: var(--pico-del-color);" data-tooltip="Неправильно">❌</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </article>
+    </details>
+
+</div>
+
+{% endblock %}
