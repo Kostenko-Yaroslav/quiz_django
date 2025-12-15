@@ -15,32 +15,21 @@
         <div class="grid">
             <div>
                 <h1 style="font-size: 4rem; margin-bottom: 0;
-                    {% if percent >= 80 %}color: var(--pico-ins-color);
-                    {% elif percent >= 50 %}color: #e6a23c;
+                    {% if attempt.percentage >= 80 %}color: var(--pico-ins-color);
+                    {% elif attempt.percentage >= 50 %}color: #e6a23c;
                     {% else %}color: var(--pico-del-color);{% endif %}">
-                    {{ percent }}%
+                    {{ attempt.percentage }}%
                 </h1>
                 <p>Загальний результат</p>
             </div>
 
             <div style="display: flex; flex-direction: column; justify-content: center;">
-                <p><strong>✅ Правильно:</strong> {{ correct }}</p>
+                <p><strong>✅ Правильно:</strong> {{ attempt.correct_answers }}</p>
 
             </div>
         </div>
 
         <footer style="margin-top: 2rem;">
-            {% if percent == 100 %}
-                <h3>🏆 Code Ninja!</h3>
-                <p>Ідеальний результат. Ви повністю опанували цю тему.</p>
-            {% elif percent >= 70 %}
-                <h3>😎 Чудова робота</h3>
-                <p>Хороший рівень знань, але є куди рости.</p>
-            {% else %}
-                <h3>📚 Треба повчитися</h3>
-                <p>Рекомендуємо повторити матеріал і спробувати ще раз.</p>
-            {% endif %}
-
             <div class="grid">
                 <a href="{% url 'quiz:quiz_list' %}" role="button" class="secondary outline">До списку тестів</a>
             </div>
@@ -60,7 +49,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for res in results %}
+                    {% for res in result %}
                         <tr>
                             <td>{{ res.question }}</td>
 

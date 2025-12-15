@@ -24,14 +24,28 @@ class Answer(models.Model):
     def __str__(self):
         return self.answer
 
-class UserResult(models.Model):
+
+class Attempt(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    level = models.ForeignKey(Level, on_delete=models.CASCADE)
+    total_question = models.IntegerField()
+    correct_answers = models.IntegerField()
+    percentage = models.FloatField()
+    date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user.username} | {self.level.name} | {self.percentage}%"
+
+class UserResult(models.Model):
+    attempt = models.ForeignKey(Attempt, on_delete=models.CASCADE, null=True, blank=True)
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     answer = models.ForeignKey(Answer, on_delete=models.CASCADE)
     is_correct = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.user.username
+        return f"{self.question.question_text} → {self.answer.answer}"
+
+
 
 
 
