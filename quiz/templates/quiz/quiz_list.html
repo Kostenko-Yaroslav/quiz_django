@@ -3,82 +3,67 @@
 {% block title %}Вибір тесту{% endblock %}
 
 {% block main %}
-    <hgroup>
-        <h1>Доступні тести</h1>
-        <p>Обери тему, щоб перевірити свої знання.</p>
-    </hgroup>
-<div class="grid">
-    {% for level in levels %}
 
+<hgroup>
+    <h1>Доступні тести</h1>
+    <p>Обери тему, щоб перевірити свої знання.</p>
+</hgroup>
+
+<div class="grid">
+
+    {% for item in levels %}
+        {% with level=item.level unlocked=item.unlocked %}
 
         <article>
+
             <header>
-                <strong>🎯 {{level.name}}</strong>
-                <span style="float: right; color: var(--pico-ins-color);">🔓 Відкрито</span>
+                <strong>🎯 {{ level.name }}</strong>
+
+                {% if unlocked %}
+                    <span style="float: right; color: var(--pico-ins-color);">
+                        🔓 Відкрито
+                    </span>
+                {% else %}
+                    <span style="float: right; color: var(--pico-del-color);"
+                          data-tooltip="Спочатку пройди попередній тест">
+                        🔒 Закрито
+                    </span>
+                {% endif %}
             </header>
-            <h3 style="margin-bottom: 0.5rem;">{{ level.theme }}</h3>
+
+            <h3 style="margin-bottom: 0.5rem;">
+                {{ level.theme|default:"Без теми" }}
+            </h3>
+
             <ul style="padding-left: 1rem; margin-bottom: 2rem; font-size: 0.9rem;">
-                <li><strong>Предмет:</strong>---------</li>
-                <li><strong>Рівень:</strong> {{ level.complexity }}</li>
-                <li><strong>Питань:</strong> 10</li>
+                <li><strong>Предмет:</strong> —</li>
+                <li><strong>Рівень:</strong> {{ level.complexity|default:"—" }}</li>
+                <li><strong>Питань:</strong> {{ level.question_set.count }}</li>
             </ul>
+
             <footer>
-                <a href="{% url 'quiz:quiz_detail' level.id %}" role="button" style="width: 100%;">Почати тест</a>
+                {% if unlocked %}
+                    <a href="{% url 'quiz:quiz_detail' level.id %}"
+                       role="button"
+                       style="width: 100%;">
+                        Почати тест
+                    </a>
+                {% else %}
+                    <button disabled
+                            style="width: 100%;"
+                            data-tooltip="Пройди попередній тест, щоб відкрити">
+                        🔒 Тест закритий
+                    </button>
+                {% endif %}
             </footer>
+
         </article>
 
+        {% endwith %}
+    {% empty %}
+        <p>Поки що немає доступних тестів.</p>
     {% endfor %}
+
 </div>
 
-    <div class="grid">
-
-        <article>
-            <header>
-                <strong>🎯 Quiz #1</strong>
-                <span style="float: right; color: var(--pico-ins-color);">🔓 Відкрито</span>
-            </header>
-            <h3 style="margin-bottom: 0.5rem;">Основи Python</h3>
-            <ul style="padding-left: 1rem; margin-bottom: 2rem; font-size: 0.9rem;">
-                <li><strong>Предмет:</strong> Програмування</li>
-                <li><strong>Рівень:</strong> Початковий</li>
-                <li><strong>Питань:</strong> 10</li>
-            </ul>
-            <footer>
-                <a href="#" role="button" style="width: 100%;">Почати тест</a>
-            </footer>
-        </article>
-
-        <article>
-            <header>
-                <strong>🎯 Quiz #2</strong>
-                <span style="float: right; color: var(--pico-ins-color);">🔓 Відкрито</span>
-            </header>
-            <h3 style="margin-bottom: 0.5rem;">Django Framework</h3>
-            <ul style="padding-left: 1rem; margin-bottom: 2rem; font-size: 0.9rem;">
-                <li><strong>Предмет:</strong> Web-розробка</li>
-                <li><strong>Рівень:</strong> Середній</li>
-                <li><strong>Питань:</strong> 15</li>
-            </ul>
-            <footer>
-                <a href="#" role="button" class="contrast" style="width: 100%;">Почати тест</a>
-            </footer>
-        </article>
-
-        <article>
-            <header>
-                <strong>🎯 Quiz #3</strong>
-                <span style="float: right; color: var(--pico-del-color);">🔒 Закрито</span>
-            </header>
-            <h3 style="margin-bottom: 0.5rem;">Бази даних SQL</h3>
-            <ul style="padding-left: 1rem; margin-bottom: 2rem; font-size: 0.9rem;">
-                <li><strong>Предмет:</strong> Бази даних</li>
-                <li><strong>Рівень:</strong> Складний</li>
-                <li><strong>Питань:</strong> 20</li>
-            </ul>
-            <footer>
-                <button disabled style="width: 100%;">Недоступно</button>
-            </footer>
-        </article>
-
-    </div>
 {% endblock %}

@@ -4,99 +4,122 @@
 
 {% block main %}
 
-    <div class="grid">
+<div class="grid">
 
-        <article>
-            <header style="text-align: center;">
-                <img src="https://ui-avatars.com/api/?name={{ user.username }}&background=0D47A1&color=fff&size=128"
-                     style="border-radius: 50%; margin-bottom: 1rem;" alt="Avatar">
-                <h2>{{ user.username }}</h2>
-            </header>
+    <article>
+        <header style="text-align: center;">
+            <img
+                src="https://ui-avatars.com/api/?name={{ user.username }}&background=0D47A1&color=fff&size=128"
+                alt="Avatar"
+                style="border-radius: 50%; margin-bottom: 1rem;"
+            >
+            <h2>{{ user.username }}</h2>
+        </header>
 
-            <p><strong>Email:</strong> {{ user.email|default:"user@example.com" }}</p>
-            <p><strong>Дата реєстрації:</strong> 12.11.2025</p>
+        <p><strong>Email:</strong> {{ user.email|default:"—" }}</p>
+        <p><strong>Дата реєстрації:</strong> {{ user.date_joined|date:"d.m.Y" }}</p>
 
-            <footer>
-                <a href="#" role="button" class="secondary outline" style="width: 100%;">Вийти з акаунту</a>
-            </footer>
-        </article>
-
-        <article>
-            <header>
-                <strong>📊 Ваша статистика</strong>
-            </header>
-
-            <div class="grid" style="text-align: center;">
-                <div>
-                    <h3 style="margin-bottom: 0;">1,250</h3>
-                    <small>Всього XP</small>
-                </div>
-                <div>
-                    <h3 style="margin-bottom: 0;">12</h3>
-                    <small>Пройдено тестів</small>
-                </div>
-                <div>
-                    <h3 style="margin-bottom: 0; color: var(--pico-ins-color);">85%</h3>
-                    <small>Точність відповідей</small>
-                </div>
-            </div>
-
-            <hr>
-
-            <label>Рівень 5: <strong>Code Ninja</strong></label>
-            <progress value="75" max="100"></progress>
-            <small>Ще 250 XP до рівня "Middle"</small>
-
-            <div style="margin-top: 2rem;">
-                <h6>🏆 Досягнення</h6>
-                <div class="grid">
-                    <span data-tooltip="Пройшов 5 тестів поспіль">🔥 Стрік</span>
-                    <span data-tooltip="Вивчив основи Django">🕸️ Django Fan</span>
-                    <span data-tooltip="Здав тест на 100%">⚡ Перфекціоніст</span>
-                </div>
-            </div>
-        </article>
-    </div>
+        <footer>
+            <a href="{% url 'users:logout' %}"
+               role="button"
+               class="secondary outline"
+               style="width: 100%;">
+                Вийти з акаунту
+            </a>
+        </footer>
+    </article>
 
     <article>
         <header>
-            <strong>🕓 Історія активності</strong>
+            <strong>📊 Ваша статистика</strong>
         </header>
 
-        <table class="striped">
-            <thead>
-                <tr>
-                    <th scope="col">Назва тесту</th>
-                    <th scope="col">Дата</th>
-                    <th scope="col">Результат</th>
-                    <th scope="col">Статус</th>
-                    <th scope="col">Дія</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>🐍 Python Basics: Loops</td>
-                    <td>09.12.2025</td>
-                    <td>10 / 10</td>
-                    <td style="color: var(--pico-ins-color);">Відмінно</td>
-                    <td><a href="#">Переглянути</a></td>
-                </tr>
-                <tr>
-                    <td>🗄️ SQL for Beginners</td>
-                    <td>08.12.2025</td>
-                    <td>7 / 10</td>
-                    <td style="color: #e6a23c;">Добре</td>
-                    <td><a href="#">Переглянути</a></td>
-                </tr>
-                <tr>
-                    <td>🕸️ Django Models Architecture</td>
-                    <td>05.12.2025</td>
-                    <td>3 / 10</td>
-                    <td style="color: var(--pico-del-color);">Провал</td>
-                    <td><a href="#">Перездати</a></td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="grid" style="text-align: center;">
+            <div>
+                <h3 style="margin-bottom: 0;">{{ user.userprofile.xp }}</h3>
+                <small>Всього XP</small>
+            </div>
+            <div>
+                <h3 style="margin-bottom: 0;">{{ total_attempts }}</h3>
+                <small>Пройдено тестів</small>
+            </div>
+            <div>
+                <h3 style="margin-bottom: 0; color: var(--pico-ins-color);">
+                    {{ avg_accuracy }}%
+                </h3>
+                <small>Точність відповідей</small>
+            </div>
+        </div>
+
+        <hr>
+
+        <label>Рівень: <strong>Code Ninja</strong></label>
+        <progress value="75" max="100"></progress>
+        <small>Ще XP до рівня "Middle"</small>
+
+        <div style="margin-top: 2rem;">
+            <h6>🏆 Досягнення</h6>
+
+            <div class="grid" style="text-align: center;">
+                {% for ua in achievements %}
+                    <span
+                        data-tooltip="{{ ua.achievement.description }}"
+                        style="cursor: help;"
+                    >
+                        🏅 {{ ua.achievement.title }}
+                    </span>
+                {% empty %}
+                    <span>Немає досягнень</span>
+                {% endfor %}
+            </div>
+        </div>
     </article>
+
+</div>
+
+<article>
+    <header>
+        <strong>🕓 Історія активності</strong>
+    </header>
+
+    <table class="striped">
+        <thead>
+            <tr>
+                <th>Назва тесту</th>
+                <th>Дата</th>
+                <th>Результат</th>
+                <th>Статус</th>
+                <th>Дія</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for attempt in attempts %}
+                <tr>
+                    <td>{{ attempt.level.name }}</td>
+                    <td>{{ attempt.date|date:"d.m.Y" }}</td>
+                    <td>{{ attempt.correct_answers }} / {{ attempt.total_question }}</td>
+                    <td>
+                        {% if attempt.percentage >= 80 %}
+                            <span style="color: var(--pico-ins-color);">Відмінно</span>
+                        {% elif attempt.percentage >= 50 %}
+                            <span style="color: #e6a23c;">Добре</span>
+                        {% else %}
+                            <span style="color: var(--pico-del-color);">Провал</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{% url 'quiz:quiz_result' attempt.id %}">
+                            Переглянути
+                        </a>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="5">Поки що немає спроб</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</article>
 
 {% endblock %}
