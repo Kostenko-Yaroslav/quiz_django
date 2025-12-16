@@ -12,7 +12,7 @@ class CreateUserView(CreateView):
     model = User
     form_class = UserCreationForm
     template_name = 'users/register.html'
-    success_url = reverse_lazy('login')
+    success_url = reverse_lazy('users:login')
 
 @login_required
 def profile_view(request):

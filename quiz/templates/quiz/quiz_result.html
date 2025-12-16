@@ -9,7 +9,7 @@
     <article style="text-align: center;">
         <header>
             <small style="color: var(--pico-muted-color);">Звіт про проходження</small>
-            <h2 style="margin-bottom: 0;">{{ level.name }}</h2>
+            <h2 style="margin-bottom: 0;">{{ attempt.level.name }}</h2>
         </header>
 
         <div class="grid">
@@ -49,7 +49,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for res in result %}
+                    {% for res in results %}
                         <tr>
                             <td>{{ res.question }}</td>
 

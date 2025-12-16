@@ -20,12 +20,13 @@
         <p><strong>Дата реєстрації:</strong> {{ user.date_joined|date:"d.m.Y" }}</p>
 
         <footer>
-            <a href="{% url 'users:logout' %}"
-               role="button"
-               class="secondary outline"
-               style="width: 100%;">
-                Вийти з акаунту
-            </a>
+            <form method="post" action="{% url 'users:logout' %}">
+                {% csrf_token %}
+                <button type="submit" class="secondary outline" style="width:100%">
+                    Вийти з акаунту
+                </button>
+            </form>
+
         </footer>
     </article>
 
@@ -52,10 +53,6 @@
         </div>
 
         <hr>
-
-        <label>Рівень: <strong>Code Ninja</strong></label>
-        <progress value="75" max="100"></progress>
-        <small>Ще XP до рівня "Middle"</small>
 
         <div style="margin-top: 2rem;">
             <h6>🏆 Досягнення</h6>
